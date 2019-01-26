@@ -8,9 +8,9 @@ def smart_contract_client(data=None, action=None):
     wallet_private_key = \
         "AC1D521FA63AF1CFE096DF122F9DF0D145E0E075E5A8CFD09292E4063617FA79"
     wallet_address = "0xB4cC8674B704430ce7A038279B866F346AE54B4c"
-    w3 = Web3(HTTPProvider("https://mainnet.infura.io/v3/54622322365945b4a9c1102db9dd0559"))
+    w3 = Web3(HTTPProvider("https://ropsten.infura.io/v3/54622322365945b4a9c1102db9dd0559"))
     contract_address = w3.toChecksumAddress(contract_address)
-    w3.eth.DefaultAccount = "0xB4cC8674B704430ce7A038279B866F346AE54B4c"
+    w3.eth.DefaultAccount = "0xb4cc8674b704430ce7a038279b866f346ae54b4c"
     # Contract setup
     with open('abi.json') as f:
         json_abi = json.load(f)
