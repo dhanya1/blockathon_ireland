@@ -20,15 +20,21 @@ def smart_contract_client(data=None, action=None):
     tx_hash = Data_storage.constructor().transact()
     """
     contract = w3.eth.contract(address=contract_address, abi=json_abi["abi"])
+    nonce = w3.eth.getTransactionCount(wallet_address)
+
     block_hash = hashlib.sha256(data.encode("utf-8")).hexdigest()
     if action.lower() == 'store':
         #print(contract.functions.Greeter().call())
-        transaction_hash = contract.functions.setdata("hello").buildTransaction({
+        txn_dict = contract.functions.setdata("hello").buildTransaction({
         'chainId': 3,
-        'gas': 140000})
-        w3.eth.waitForTransactionReceipt(transaction_hash)
-        print(transaction_hash)
-        return transaction_hash
+        'gas': 140000,
+        'nonce':nonce})
+        signed_txn = w3.eth.account.signTransaction(txn_dict,
+                                                    private_key=wallet_private_key)
+        result = w3.eth.sendRawTransaction(signed_txn.rawTransaction)
+        w3.eth.waitForTransactionReceipt(result)
+        print(result)
+        return result
     if action.lower() == 'verify':
         transaction_hash = w3.eth.functions.getresult().transact()
         print(transaction_hash)
