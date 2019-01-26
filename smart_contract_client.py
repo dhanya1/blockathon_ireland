@@ -4,7 +4,7 @@ from web3 import Web3, HTTPProvider
 
 def smart_contract_client(data=None, action=None):
     # Config
-    contract_address = "0x0eaf6e19852400e663ac6d9819dadd6f76da1c87"
+    contract_address = "0xd20e61cacd1c790af88c51a75eb596e299fdfb1f"
     wallet_private_key = \
         "AC1D521FA63AF1CFE096DF122F9DF0D145E0E075E5A8CFD09292E4063617FA79"
     wallet_address = "0xB4cC8674B704430ce7A038279B866F346AE54B4c"
@@ -17,7 +17,7 @@ def smart_contract_client(data=None, action=None):
     Data_storage = w3.eth.contract(abi=json_abi["abi"],
                                    bytecode=json_abi["bin"])
     contract = w3.eth.contract(address=contract_address, abi=json_abi["abi"])
-    print(contract)
+    tx_hash = Data_storage.constructor().transact()
     block_hash = hashlib.sha256(data.encode("utf-8")).hexdigest()
     if action.lower() == 'store':
         transaction_hash = contract.functions.set("hello").transact()
